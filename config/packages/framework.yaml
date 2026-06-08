@@ -1,0 +1,4 @@
+framework:
+  secret: '%env(APP_SECRET)%'
+  # При возникновении исключения показывать шаблон 404 ошибки.
+  error_controller: Core\Controller\ErrorController::notFound

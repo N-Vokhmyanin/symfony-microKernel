@@ -1,0 +1,12 @@
+services:
+  # Фабрика провайдеров кеша.
+  Core\Services\Cache\RedisCacheFactory:
+    public: false
+
+  # Провайдер кеша для сессии.
+  app.cache.session_redis:
+    public: true
+    class: Core\Services\Cache\RedisCacheService
+    factory: ['@Core\Services\Cache\RedisCacheFactory', 'createRedisCache']
+    arguments:
+      - 'sessions'

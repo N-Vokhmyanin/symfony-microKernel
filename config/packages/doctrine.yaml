@@ -1,0 +1,42 @@
+doctrine:
+  dbal:
+    default_connection: mysql
+    connections:
+      mysql:
+        charset: utf8
+        url: '%env(resolve:MYSQL_EXAMPLE_DATABASE_URL)%'
+        mapping_types:
+          tinyint: tinyint
+          timestamp: timestamp
+          users_role_enum: users_role_enum
+          documents_status_enum: documents_status_enum
+    types:
+      tinyint: Core\Doctrine\DBAL\Types\TinyintType
+      timestamp: Core\Doctrine\DBAL\Types\TimestampType
+      users_role_enum: Core\Doctrine\Types\Enum\UsersRoleEnumType
+  orm:
+    default_entity_manager: mysql
+    entity_managers:
+      mysql:
+        auto_mapping: true
+        mappings:
+          Core\Entity:
+            is_bundle: false
+            type: annotation
+            dir: '%kernel.project_dir%/src/Entity'
+            prefix: 'Core\Entity'
+            alias: Core
+        filters:
+          soft_delete:
+            class: Core\Doctrine\Filters\SoftDeleteFilter
+            enabled: true
+
+services:
+  # Слушатель событий ORM.
+  event.lifecycle_listener:
+    class: Core\Doctrine\EventListeners\LifecycleEventListener
+    autowire: true
+    tags:
+      - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+      - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+      - { name: doctrine.event_listener, event: preRemove, method: preRemove }

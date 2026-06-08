@@ -1,0 +1,17 @@
+security:
+  providers:
+    app.user_provider:
+      entity:
+        class: 'Core\Entity\Users'
+        property: 'user_id'
+
+  enable_authenticator_manager: true
+  firewalls:
+    other:
+      pattern: ^/(_(profiler|wdt)|web|VkSender|tests|TestAPI|swoole|others|dist|db|cron|config|App)/
+      security: false
+    internal_api:
+      pattern: ^/internal/api/*
+      provider: app.user_provider
+      custom_authenticators:
+        - Core\Security\Authenticators\UserHeaderAuthenticator

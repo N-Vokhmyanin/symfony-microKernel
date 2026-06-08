@@ -1,0 +1,36 @@
+{
+  "name": "core/symfony",
+  "version": "1.0.0",
+  "description": "",
+  "require": {
+    "php": "^7.4",
+    "ext-mbstring": "*",
+    "ext-mongodb": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "symfony/config": "5.4",
+    "symfony/http-kernel": "5.4",
+    "symfony/http-foundation": "5.4",
+    "symfony/routing": "5.4",
+    "symfony/dependency-injection": "5.4",
+    "symfony/framework-bundle": "5.4",
+    "doctrine/annotations": "1.14.x",
+    "symfony/dotenv": "5.4",
+    "symfony/orm-pack": "^2.3",
+    "symfony/validator": "v5.4.42",
+    "symfony/form": "v5.4.40",
+    "symfony/serializer": "v5.4.42",
+    "friendsofsymfony/rest-bundle": "^3.7",
+    "symfony/security-bundle": "v5.4.*",
+    "symfony/monolog-bundle": "^3.10",
+    "doctrine/mongodb-odm-bundle": "4.6.x"
+  },
+  "autoload": {
+    "psr-4": {
+      "Core\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {}
+  }
+}

@@ -1,0 +1,20 @@
+doctrine_mongodb:
+  auto_generate_proxy_classes: true
+  auto_generate_hydrator_classes: true
+  default_connection: mongodb_example
+  connections:
+    mongodb_example:
+      server: "%env(resolve:MONGO_EXAMPLE_DATABASE_URL)%"
+  default_database: "%env(MONGO_EXAMPLE_DEFAULT_DB)%"
+
+  default_document_manager: mongodb_example
+  document_managers:
+    mongodb_example:
+      auto_mapping: true
+      mappings:
+        Core\Document:
+          is_bundle: false
+          type: annotation
+          dir: "%kernel.project_dir%/src/Document"
+          prefix: 'Core\Document'
+          alias: Core

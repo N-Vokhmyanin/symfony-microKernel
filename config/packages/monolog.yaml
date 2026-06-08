@@ -1,0 +1,40 @@
+monolog:
+  channels: ['app', 'security', 'api']
+
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.json"
+      level: notice
+      formatter: monolog.formatter.json
+      channels: ['app', 'security', 'api']
+
+    stdout:
+      type: stream
+      path: "php://stdout"
+      level: warning
+      formatter: monolog.formatter.json
+      channels: ['app', 'security', 'api']
+
+    api_log:
+      type: stream
+      path: "%kernel.logs_dir%/api.json"
+      level: info
+      formatter: monolog.formatter.json
+      channels: ['api']
+
+    security_log:
+      type: stream
+      path: "%kernel.logs_dir%/security.json"
+      level: info
+      formatter: monolog.formatter.json
+      channels: ['security']
+
+services:
+  monolog.formatter.json:
+    class: Monolog\Formatter\JsonFormatter
+    arguments:
+      - 1
+      - true
+      - true
+      - false

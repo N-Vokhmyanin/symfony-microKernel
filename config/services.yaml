@@ -1,0 +1,39 @@
+imports:
+  - { resource: 'parameters.yaml' }
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: false       # Allows optimizing the container by removing unused services; this also means
+    # fetching services directly from the container via $container->get() won't work.
+    # The best practice is to be explicit about your dependencies anyway.
+
+  # makes classes in ../App/Api available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  Core\:
+    resource: '../src/*'
+    exclude: '../src/{Doctrine,DependencyInjection,Document,Entity,Migrations,Tests,Traits,Kernel.php,App.php}'
+
+  # Конфигурации пользовательских событий.
+
+  # События для Rest API контроллеров ( сопоставление классов событий { @see parameters.yaml > rest_listener_comparison_List } )
+  # При добавлений новых событий, их важно внедрить в Core\Traits\Controller\RestCRUDTrait, реализовать в RestListener и обновить интерфейс.
+  Core\Event\Listeners\Rest\RestListener:
+    tags:
+      - { name: 'kernel.event_listener', event: 'rest.entity.after.created', method: 'onEntityAfterCreated' }
+      - { name: 'kernel.event_listener', event: 'rest.entity.before.created', method: 'onEntityBeforeCreated' }
+      - { name: 'kernel.event_listener', event: 'rest.entity.after.updated', method: 'onEntityAfterUpdated' }
+      - { name: 'kernel.event_listener', event: 'rest.entity.before.updated', method: 'onEntityBeforeUpdated' }
+      - { name: 'kernel.event_listener', event: 'rest.entity.after.deleted', method: 'onEntityAfterDeleted' }
+      - { name: 'kernel.event_listener', event: 'rest.entity.before.deleted', method: 'onEntityBeforeDeleted' }
+
+  # Конфигурация сервисов сущностей.
+  Core\Services\Example\ExampleService:
+    public: true
+
+  Core\Services\Api\Example\ExampleApi:
+    public: true
+    arguments:
+      - '%core.example_api.service_url%'

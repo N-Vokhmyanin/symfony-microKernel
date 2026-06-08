@@ -1,0 +1,15 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+
+fos_rest:
+  allowed_methods_listener: true
+  serializer:
+    groups: ['default']
+    serialize_null: false
+  body_listener:
+    enabled: true
+  zone:
+    - { path: ^/internal/api/* }
+  format_listener:
+    enabled: true
+    rules:
+      - { path: ^/internal/api/*, prefer_extension: true, fallback_format: json, priorities: [ json ] }

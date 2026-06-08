@@ -1,0 +1,22 @@
+parameters:
+  local: 'ru'
+
+  core.example_api.service_url: '%env(CORE_EXAMPLE_HTTP_URL)%'
+
+
+  # Список названий экшенов которые еще не доступны для использования.
+  feature_functional_actions:
+    - 'api_v1_example_test_messages_get'
+
+  # Лимит по умолчанию вывода элементов при получении их списка.
+  items_list_limit:
+    example_document: 10
+
+  # Список сопоставлений сущности к классам событиям по типу Rest.
+  rest_listener_comparison_List:
+    'Core\Document\ExampleDocument': 'Core\Event\Handlers\Rest\ExampleDocumentEvents'
+
+# Переменные переопределяемые для 'dev' окружения.
+when@dev:
+  parameters:
+    feature_functional_actions: null
